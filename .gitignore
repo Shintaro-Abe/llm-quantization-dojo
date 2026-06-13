@@ -1,0 +1,25 @@
+# --- Claude Code（個人ローカル設定・履歴） ---
+# settings.local.json は個人/ローカルの上書き設定。共有しない。
+.claude/settings.local.json
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+
+# --- ログ ---
+*.log
+
+# --- 環境変数・シークレット ---
+.env
+.env.*
+!.env.example
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.ipynb_checkpoints/
+
+# --- Node ---
+node_modules/

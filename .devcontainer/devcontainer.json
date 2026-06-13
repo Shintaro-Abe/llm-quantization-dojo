@@ -1,0 +1,44 @@
+{
+  "name": "llm-quantization-dojo",
+  "image": "mcr.microsoft.com/devcontainers/base:bookworm",
+  "workspaceFolder": "/workspaces/llm-quantization-dojo",
+
+  "runArgs": [
+    "--network=claude-observability"
+  ],
+
+  // ★追加: ~/.claude を永続化 (Rebuild しても保持)
+  // localWorkspaceFolderBasename によりプロジェクトごとに独立ボリュームを自動派生。
+  // 例: llm-quantization-dojo → llm-quantization-dojo-claude-home / llm-quantization-dojo → llm-quantization-dojo-claude-home
+  // 既存プロジェクトで明示的なボリューム名を保持したい場合は固定文字列に差し替える。
+  "mounts": [
+    "source=${localWorkspaceFolderBasename}-claude-home,target=/home/vscode/.claude,type=volume",
+    // Codex / Gemini の OAuth ログイン情報 (~/.codex/auth.json, ~/.gemini/oauth_creds.json)
+    // を Rebuild 後も保持するための named volume。初回マウント時は root 所有になるため
+    // post_create.sh §0.5 で chown 補正する。
+    "source=${localWorkspaceFolderBasename}-codex-home,target=/home/vscode/.codex,type=volume",
+    "source=${localWorkspaceFolderBasename}-gemini-home,target=/home/vscode/.gemini,type=volume"
+  ],
+
+  "containerEnv": {
+    "CLAUDE_CODE_ENABLE_TELEMETRY": "1",
+    "OTEL_METRICS_EXPORTER": "otlp",
+    "OTEL_LOGS_EXPORTER": "otlp",
+    "OTEL_EXPORTER_OTLP_PROTOCOL": "grpc",
+    "OTEL_EXPORTER_OTLP_ENDPOINT": "http://otel-collector:4317",
+    "OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE": "cumulative",
+    "OTEL_METRIC_EXPORT_INTERVAL": "10000",
+    "OTEL_LOGS_EXPORT_INTERVAL": "5000",
+    "OTEL_RESOURCE_ATTRIBUTES": "project.name=llm-quantization-dojo",
+    "OTEL_LOG_TOOL_DETAILS": "1"
+  },
+
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/devcontainers/features/aws-cli:1": {}
+  },
+  "postCreateCommand": ".devcontainer/post_create.sh",
+  "postStartCommand": ".devcontainer/post_start.sh",
+  "postAttachCommand": ".devcontainer/post_start.sh"
+}

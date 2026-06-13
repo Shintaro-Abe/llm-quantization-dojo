@@ -1,0 +1,14 @@
+{
+  "enabledPlugins": {
+    "codex@openai-codex": true,
+    "example-skills@anthropic-agent-skills": true,
+    "document-skills@anthropic-agent-skills": true,
+    "deploy-on-aws@agent-plugins-for-aws": true
+  },
+  "permissions": {
+    "allow": [
+      "Bash(.claude/skills/gemini/scripts/gemini-ask.sh flash *)",
+      "Bash(.claude/skills/gemini/scripts/gemini-ask.sh pro *)"
+    ]
+  }
+}
