@@ -107,14 +107,11 @@ LLM の重みは通常 16bit（fp16/bf16）で保持されます。これを **4
 
 概念を読んだら、Colabで実際に動かします。**データ整形のしかた・微調整がうまくいったかの確認（推論の前後比較）は、ノートブック内のコードと解説が一次情報**です。このページはあくまで考え方の地図です。
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/OWNER/REPO/blob/main/notebooks/01_bitsandbytes_qlora.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Shintaro-Abe/llm-quantization-dojo/blob/main/notebooks/01_bitsandbytes_qlora.ipynb)
 
 - ノートブック：`notebooks/01_bitsandbytes_qlora.ipynb`
 - 内容：NF4で4bitロード → 小データでQLoRA微調整 → 推論の前後比較（「語尾を必ず『〜だミャ。』にする」デモで変化が一目で分かります）
 - 既定モデルは `HuggingFaceTB/SmolLM2-1.7B`。OOM時は `TinyLlama-1.1B-Chat` に差し替え（このページ下部の「トラブルシュート」参照）
-
-!!! note "バッジの差し替え"
-    上の「Open in Colab」バッジ内 `OWNER/REPO` は、リポジトリ確定後に実際の `owner/repo` へ差し替えてください。
 
 ## 理解度を確認する
 

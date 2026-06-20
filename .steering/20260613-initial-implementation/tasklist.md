@@ -2,7 +2,7 @@
 
 - 作業名: initial-implementation（MVP=第1章 bitsandbytes NF4/QLoRA）
 - 作成日: 2026-06-13
-- ステータス: 実装中（Phase 3〜6 実装完了 / Phase 7 着手前。Notebookは静的・ロジック検証済、T4実機完走は要確認）。最終更新: 2026-06-20
+- ステータス: 実装完了（Phase 3〜8 ローカル検証済）。残: AC-4/5=push後・AC-2/3=T4実機（[acceptance.md](acceptance.md)）。最終更新: 2026-06-20
 - 上位文書: [requirements.md](requirements.md) ／ [design.md](design.md)
 - 実装ブランチ: `feat/mvp-chapter-01`
 
@@ -48,7 +48,7 @@
 - [x] T6-3 セットアップは量子化/学習系を緩めに `>=` 指定（torchはColab既定）、環境確認セルで `nvidia-smi`／`seed` 固定／GPU assert。
 - [x] T6-4 本編「NF4で4bitロード（fp16）→直書き十数件でQLoRA→推論の前後比較」を段階的Markdown解説付きで実装（データ整形・成否確認は**Notebookが一次情報**）。デモ=「語尾『〜だミャ。』強制」＋過学習の正直注記。
 - [x] T6-5 末尾に理解度確認設問＋chapter-task Issue作成への導線リンク。
-- [x] T6-6 章ページ（index.md）に「Open in Colab」バッジを追加（リポジトリslug `OWNER/REPO` は確定後に差し込み）。
+- [x] T6-6 章ページ（index.md）に「Open in Colab」バッジを追加（実slug `Shintaro-Abe/llm-quantization-dojo` 差し込み済み）。
 - [~] T6-7 **検証分担（grilling）**: 作者=**静的検証（nbformat妥当＋pythonセル構文）＋ロジック検証**まで実施済み。**T4実機の Run all 完走は学習者が確認**（Notebook冒頭に明示）。
 
 **DoD**: 実装・静的/ロジック検証は完了。🔲 無料T4での Run all 完走（AC-2,3）は **学習者/利用時に実機確認**。
@@ -62,14 +62,14 @@
 
 **DoD**: chapter-task Issueテンプレと progress-tracking 手順書から、学習者が自分のProjectで進捗管理（Board＋ガント）を開始できる（AC-6）。
 
-## Phase 8: 品質チェック 🔲
+## Phase 8: 品質チェック ✅ ローカル完了（push後/実機の残作業あり）
 
-- [ ] T8-1 `.github/workflows/link-check.yml`（lychee、PR＋`main` push＋月次cron、リトライ/除外設定、検出=自動）。
-- [ ] T8-2 全Markdown/Notebook内リンクで `link-check` が green（AC-5）。
-- [ ] T8-3 `mkdocs build --strict` 警告ゼロを最終確認（AC-4）。
-- [ ] T8-4 受け入れ条件 AC-1〜6 を順に手動ウォークスルーし結果を記録。
+- [x] T8-1 `.github/workflows/link-check.yml`（lychee。**PR/push=内部のみ`--offline`／月次cron＝外部含むフル**＝grilling 2C。リトライ設定あり）。
+- [x] T8-2 lychee 検査：ローカルで**内部27件OK／フル41件OK・0エラー**（CIのgreenは push後に確認）。
+- [x] T8-3 `mkdocs build --strict` 警告ゼロを最終確認。
+- [x] T8-4 受け入れ AC-1〜6 をウォークスルーし [acceptance.md](acceptance.md) に**3分類で記録**（✅ローカル／⚠️push後／⏳実機）。
 
-**DoD**: AC-1〜6 をすべて満たし、[requirements.md](requirements.md) §5 のDoDを充足。
+**DoD**: ローカル検証可能分（AC-1・AC-6・build --strict・lychee内部/フル）は green。AC-2/3（実機）・AC-4/5（push後）は [acceptance.md](acceptance.md) に残作業として明示。
 
 ---
 
@@ -86,5 +86,5 @@
 2. ✅ Phase 5 T5-1（environment-setup＝挫折回避の導線）
 3. ✅ Phase 5 残り（第1章座学＋安全チェックコラム）
 4. ✅ Phase 6（Notebook・静的/ロジック検証済、T4実機完走は要確認）
-5. 🔲 Phase 7（進捗テンプレ＋手順書）← 次
-6. 🔲 Phase 8（品質CI → 受け入れ通し）
+5. ✅ Phase 7（進捗テンプレ＋手順書）
+6. ✅ Phase 8（品質CI → 受け入れ通し。ローカル分green、残=push後/実機）
