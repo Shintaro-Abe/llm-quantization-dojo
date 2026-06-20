@@ -2,7 +2,7 @@
 
 - 作業名: initial-implementation（MVP=第1章 bitsandbytes NF4/QLoRA）
 - 作成日: 2026-06-13
-- ステータス: 実装完了（Phase 3〜8 ローカル検証済）。残: AC-4/5=push後・AC-2/3=T4実機（[acceptance.md](acceptance.md)）。最終更新: 2026-06-20
+- ステータス: 完了（PR #1 マージ済・Pages公開・CI green）。残: AC-2/3=T4実機のみ（[acceptance.md](acceptance.md)）。最終更新: 2026-06-20
 - 上位文書: [requirements.md](requirements.md) ／ [design.md](design.md)
 - 実装ブランチ: `feat/mvp-chapter-01`
 
