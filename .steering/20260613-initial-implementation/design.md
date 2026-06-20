@@ -110,16 +110,25 @@ Phase8 品質CI（lychee）＋ build --strict ＋ 受け入れ通し
 | bitsandbytes | https://github.com/bitsandbytes-foundation/bitsandbytes | 旧 TimDettmers から foundation へ移管済み（[glossary.md](../../docs/glossary.md) 参照） |
 | PEFT | https://github.com/huggingface/peft | LoRA/QLoRA 実装 |
 
-### 5.4 非ゲート小型モデル（既定モデル候補・完走保証）
-ログイン不要・Apache-2.0/MIT・1〜3B級を既定とする（AC-3）。Notebook実装時に最終ロード確認のうえ1つを既定、残りを代替として明記する。
+### 5.4 既定モデルの確定（grilling 反映 / 2026-06-20）
 
-| モデル | パラメータ | ライセンス | 位置づけ |
-| :-- | :-- | :-- | :-- |
-| Qwen2.5-1.5B 系 | ~1.5B | Apache-2.0 | 既定候補（軽量・完走容易） |
-| TinyLlama-1.1B | ~1.1B | Apache-2.0 | 代替（最軽量） |
-| 7B級（発展） | ~7B | Apache-2.0系 | Kaggle T4×2 向け発展課題 |
+`/grill-me`（テーマ：中華系モデルのセキュリティ懸念）の結論として、**方針X＝既定を西側 Apache-2.0 モデルに差し替え**を採用。技術的には Qwen2.5-1.5B も安全（safetensors／非ゲート／`trust_remote_code` 不要）に使えるが、Public公開教材としての心理的・対外的配慮から既定にはしない。すべて 2026-06-20 に公式モデルカードで確認済み。
 
-> ゲート付き（要ライセンス同意）モデルはMVPの既定にしない。具体モデルIDの確定とライセンス再確認はPhase6（Notebook実装）時に行う。
+| モデル | パラメータ | ライセンス | ゲート | 形式 | 位置づけ |
+| :-- | :-- | :-- | :-- | :-- | :-- |
+| `HuggingFaceTB/SmolLM2-1.7B` | ~1.7B | Apache-2.0 | なし | safetensors | **既定（主役）**。HF公式・保守活発・T4でQLoRA余裕 |
+| `TinyLlama/TinyLlama-1.1B-Chat-v1.0` | ~1.1B | Apache-2.0 | なし | safetensors | **フォールバック**（OOM時に差し替え・最軽量） |
+| `Qwen/Qwen2.5-1.5B` | ~1.5B | Apache-2.0 | なし | safetensors | **発展**：同手順が他モデルでも通る例として任意言及 |
+| 7B級 | ~7B | Apache-2.0系 | — | — | 発展課題（Kaggle T4×2 向け） |
+
+#### モデル選定の安全チェック（座学コラムとして追加する）
+grilling で「国籍より運用」と整理した内容を、初学者が再利用できる**チェックリスト**として座学（第1章 index.md）に追加する。
+
+1. **safetensors 形式か**（pickle `.bin` は読み込み時にコード実行の恐れ）
+2. **`trust_remote_code=True` が不要か**（必要＝モデル作者のPythonを実行する）
+3. **公式org から取得しているか**（偽フォーク回避）
+4. **ライセンス・ゲートの確認**（Apache-2.0/MIT・非ゲート）
+5. （出力品質/思想が重要な用途なら）検閲・バイアスの確認 ※第1章の目的＝手法習得には影響しない
 
 ## 5.5 第1章 座学設計の確定事項（grilling 反映 / 2026-06-20）
 

@@ -36,6 +36,16 @@
 | HF Blog｜4-bit quantization (bitsandbytes) | https://huggingface.co/blog/4bit-transformers-bitsandbytes | 4bit量子化の解説記事（背景理解に） |
 | DeepLearning.AI｜Quantization Fundamentals | https://www.deeplearning.ai/short-courses/quantization-fundamentals-with-hugging-face/ | HF公式協力の無料入門コース |
 
+## 5. 第1章で使うモデル（公式モデルカード）
+
+いずれも **Apache-2.0・非ゲート・safetensors・`trust_remote_code` 不要**（2026-06-20 確認）。選定理由は[概念ページの「モデルを選ぶときの安全チェック」](index.md)を参照。
+
+| モデル | URL | 位置づけ |
+| :-- | :-- | :-- |
+| SmolLM2-1.7B（既定） | https://huggingface.co/HuggingFaceTB/SmolLM2-1.7B | 主役。HF公式・T4でQLoRA余裕 |
+| TinyLlama-1.1B-Chat | https://huggingface.co/TinyLlama/TinyLlama-1.1B-Chat-v1.0 | フォールバック（最軽量） |
+| Qwen2.5-1.5B | https://huggingface.co/Qwen/Qwen2.5-1.5B | 発展（他モデルでも同手順が通る例） |
+
 !!! warning "ブログ・動画・第三者記事について"
     解説記事や動画は理解の補助に有用ですが、品質・鮮度にばらつきがあります。**実装の正は必ず上記1〜3（公式doc・論文・公式実装）で確認**してください。
 
