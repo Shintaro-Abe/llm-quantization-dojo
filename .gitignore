@@ -23,3 +23,6 @@ venv/
 
 # --- Node ---
 node_modules/
+
+# --- MkDocs（ビルド生成物） ---
+site/
