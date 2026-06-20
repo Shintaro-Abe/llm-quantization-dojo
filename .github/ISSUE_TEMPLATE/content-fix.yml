@@ -1,0 +1,35 @@
+name: 内容修正・リンク切れ報告
+description: 座学/Notebook の誤り・古い情報・リンク切れを報告します
+title: "[fix] "
+labels: ["content-fix"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        公式情報は更新されます。**リンク切れや古い記述に気づいたらここで記録**してください（鮮度運用の起点）。
+  - type: input
+    id: where
+    attributes:
+      label: 対象ページ / ファイル
+      description: URL かリポジトリ内パス。例「learn/chapters/01-bitsandbytes-qlora/references.md」
+      placeholder: learn/chapters/01-bitsandbytes-qlora/references.md
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: 種別
+      options:
+        - リンク切れ
+        - 内容が古い
+        - 誤り・誤字
+        - その他
+    validations:
+      required: true
+  - type: textarea
+    id: detail
+    attributes:
+      label: 詳細
+      description: どこが・どう問題か。可能なら正しい情報やリンクも。
+    validations:
+      required: true

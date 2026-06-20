@@ -36,10 +36,10 @@ Phase8 品質CI（lychee）＋ build --strict ＋ 受け入れ通し
 | 7 | `learn/chapters/01-bitsandbytes-qlora/index.md` | 新規 | NF4/QLoRA概念（薄い自作解説） | AC-1 |
 | 8 | `learn/chapters/01-bitsandbytes-qlora/references.md` | 新規 | 公式リンク集（最終確認日付き） | AC-1 |
 | 9 | `notebooks/01_bitsandbytes_qlora.ipynb` | 新規 | 第1章ハンズオン（Colabバッジ・Run all完走） | AC-2, AC-3 |
-| 10 | `.github/ISSUE_TEMPLATE/chapter-task.yml` | 新規 | 章タスク用Issueフォーム | AC-6 |
+| 10 | `.github/ISSUE_TEMPLATE/chapter-task.yml` | 新規 | 章タスク用Issueフォーム（**4項目に最小化**・章は自由記述・`learning` ラベル） | AC-6 |
 | 11 | `.github/ISSUE_TEMPLATE/content-fix.yml` | 新規 | 内容修正・リンク切れ報告フォーム | AC-5, AC-6 |
-| 12 | `.github/PULL_REQUEST_TEMPLATE.md` | 新規 | PRチェックリスト（build/link-check/Notebook完走） | AC-6 |
-| 13 | `learn/getting-started/progress-tracking.md` | 新規 | Issues/Projects v2 運用手順 | AC-6 |
+| ~~12~~ | ~~`.github/PULL_REQUEST_TEMPLATE.md`~~ | **作らない** | grilling=1人運用の摩擦。品質ゲートはCI(link-check)＋`build --strict`が担保 | — |
+| 13 | `learn/getting-started/progress-tracking.md` | 新規 | Projects v2 運用手順（**Board=進捗一覧＋Roadmap=ガント**）＋Pages切替手順(T4-2) | AC-6 |
 | 14 | `.github/workflows/link-check.yml` | 新規 | lychee リンク切れ検査 | AC-5 |
 
 > 既存の `docs/`（ガバナンス6点）・`research/` は変更しない。`docs/` はMkDocs公開対象外（`docs_dir: learn` のため自動的に除外）。
@@ -73,21 +73,25 @@ Phase8 品質CI（lychee）＋ build --strict ＋ 受け入れ通し
 - 出力ノイズはコミット前に最小化（nbstripout は任意）。
 - 構成は §6 のテンプレートに従う。
 
-### 3.6 進捗管理（テンプレ＋手順書のみ）
-- MVPは **Issue/PRテンプレ＋Projects運用手順書まで**。gh CLI/Actionsでの自動生成はスコープ外（[requirements.md](requirements.md) §1）。
-- Projects v2 のフィールド定義は [functional-design.md](../../docs/functional-design.md) のデータモデルに準拠（章/難易度/開始日/完了日/所要時間/定着度）。
+### 3.6 進捗管理（テンプレ＋手順書のみ / grilling 反映）
+- MVPは **Issueテンプレ＋Projects運用手順書まで**。gh CLI/Actionsでの自動生成はスコープ外（[requirements.md](requirements.md) §1）。
+- grilling で欲しい価値を3点に確定：**①章の進捗一覧（Board）②つまずき＋所要時間の振り返り（Issue）③ガントチャート（Roadmap）**。
+- **ガント要件が Projects v2 を正当化**（GitHubでガントを出す唯一の手段が Roadmap ビュー）。
+- **PRテンプレートは作らない**（1人運用の摩擦。品質ゲートは CI link-check ＋ `build --strict`）。
+- chapter-task Issue は**4項目に最小化**、章は**自由記述＋ラベル**（dropdownの保守を回避）。
 
 ## 4. データ構造（進捗管理スキーマ）
 
-| 項目 | 型 | 用途 |
-| :-- | :-- | :-- |
-| 章 (chapter) | Single select | どの章のタスクか |
-| Status | Single select | Backlog / 学習中 / 復習 / 完了 |
-| 学習ステップ | Checklist（Issue本文） | 座学 / 公式doc / Notebook完走 / 理解度確認 |
-| 難易度 | Single select | 体感難度 |
-| 開始日・完了日 | Date | 学習期間 |
-| 所要時間 | Number | 実績時間 |
-| 定着度 | Number(1–5) | 復習要否の判断 |
+grilling で**最小フィールド**に絞り込み（難易度・定着度は任意・後付けに降格）。
+
+| 項目 | 型 | 用途 | 必須 |
+| :-- | :-- | :-- | :-- |
+| 章 (chapter) | 自由記述＋ラベル | どの章のタスクか（dropdownにせず保守ゼロ） | ○ |
+| Status | Single select | Backlog / 学習中 / 復習 / 完了（Board） | ○ |
+| 学習ステップ | Checklist（Issue本文） | 座学 / 公式doc / Notebook完走 / 理解度確認 | ○ |
+| 所要時間 | Number | 実績時間（振り返り用） | ○ |
+| 開始日・目標日 | Date | **Roadmap（ガント）の横軸** | ○（ガント用） |
+| 難易度・定着度 | Single select / Number | 任意（後付け・1人運用では省略可） | 任意 |
 
 ## 5. 教材調達先マッピング（公式doc / 論文 / 公式実装 / 非ゲート小型モデル）
 

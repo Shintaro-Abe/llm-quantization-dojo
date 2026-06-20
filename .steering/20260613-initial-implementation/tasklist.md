@@ -53,14 +53,14 @@
 
 **DoD**: 実装・静的/ロジック検証は完了。🔲 無料T4での Run all 完走（AC-2,3）は **学習者/利用時に実機確認**。
 
-## Phase 7: 進捗管理テンプレ＋手順書 🔲
+## Phase 7: 進捗管理テンプレ＋手順書 🔲 次に着手（grilling 反映）
 
-- [ ] T7-1 `.github/ISSUE_TEMPLATE/chapter-task.yml`（章dropdown・学習ステップchecklist[座学/公式doc/Notebook完走/理解度確認]・詰まった点・所要時間・labels）。
+- [ ] T7-1 `.github/ISSUE_TEMPLATE/chapter-task.yml`（**4項目に最小化**：章[自由記述]・学習ステップchecklist[座学/公式doc/Notebook完走/理解度確認]・つまずき・所要時間。`learning` ラベル自動付与。dropdownは使わない）。
 - [ ] T7-2 `.github/ISSUE_TEMPLATE/content-fix.yml`（内容修正・リンク切れ報告）。
-- [ ] T7-3 `.github/PULL_REQUEST_TEMPLATE.md`（build/link-check/Notebook完走のチェックリスト）。
-- [ ] T7-4 `learn/getting-started/progress-tracking.md`（Projects v2 の作成・フィールド設定[章/Status/難易度/開始日/完了日/所要時間/定着度]・Issue紐付け手順＋**PagesソースをActionsに切替える手順=T4-2**）。
+- [x] ~~T7-3 PRテンプレート~~ … **作らない**（grilling=1人運用の摩擦。品質ゲートはCI link-check＋`build --strict`）。
+- [ ] T7-4 `learn/getting-started/progress-tracking.md`（Projects v2 を **Board=進捗一覧＋Roadmap=ガント** で作る手順、最小フィールド[章/Status/開始日/目標日/所要時間]、Issue紐付け、**PagesソースをActionsに切替える手順=T4-2**）。
 
-**DoD**: chapter-task Issueテンプレと progress-tracking 手順書から、学習者が自分のProjectで進捗管理を開始できる（AC-6）。
+**DoD**: chapter-task Issueテンプレと progress-tracking 手順書から、学習者が自分のProjectで進捗管理（Board＋ガント）を開始できる（AC-6）。
 
 ## Phase 8: 品質チェック 🔲
 
