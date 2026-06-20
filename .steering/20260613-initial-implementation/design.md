@@ -2,7 +2,7 @@
 
 - 作業名: initial-implementation（MVP=第1章 bitsandbytes NF4/QLoRA）
 - 作成日: 2026-06-13
-- ステータス: ドラフト（承認待ち）
+- ステータス: 承認済み（実装中・grilling反映済み）。最終更新: 2026-06-20
 - 上位文書: [requirements.md](requirements.md) ／ [docs/architecture.md](../../docs/architecture.md) ／ [docs/repository-structure.md](../../docs/repository-structure.md) ／ [docs/development-guidelines.md](../../docs/development-guidelines.md)
 
 ## 1. 実装アプローチ
@@ -52,22 +52,23 @@ Phase8 品質CI（lychee）＋ build --strict ＋ 受け入れ通し
 - `pymdownx`（コードハイライト・admonition・タブ）を有効化。リンク健全性のため**絶対URL**を基本とする。
 - `mkdocs build --strict` を通すため、nav未掲載ページ・リンク切れを残さない。
 
-### 3.2 Pages公開（deploy-docs.yml）
-- トリガ: `main` への push（`learn/**`・`mkdocs.yml`・`requirements-docs.txt` 変更時）＋手動 `workflow_dispatch`。
-- ジョブ: `pip install -r requirements-docs.txt` → `mkdocs build --strict` → `actions/upload-pages-artifact` → `actions/deploy-pages`。
-- `gh-pages` ブランチは作らない（ビルドと履歴を分離）。Pagesソースを「GitHub Actions」に切替える**手順**は progress-tracking.md と development-guidelines.md に明記（設定操作自体は手動）。
+### 3.2 Pages公開（deploy-docs.yml）※実装済み
+- トリガ: `main` への push（`learn/**`・`mkdocs.yml`・`requirements-docs.txt`・ワークフロー自身の変更時）＋手動 `workflow_dispatch`。
+- ジョブ: `pip install -r requirements-docs.txt` → `mkdocs build --strict` → `actions/upload-pages-artifact@v3` → `actions/deploy-pages@v4`。
+- `gh-pages` ブランチは作らない（ビルドと履歴を分離）。`concurrency: pages` で多重実行を抑制。Pagesソースを「GitHub Actions」に切替える**手順**は **progress-tracking.md（Phase 7）** に記載予定（設定操作自体は手動）。
 - 権限は `pages: write`・`id-token: write` を最小付与。
+- ※CI green と Pages 閲覧可否は **`main` への push 後**に確認（ローカルでは YAML 妥当性と `build --strict` を検証済み）。
 
 ### 3.3 リンク検査（link-check.yml）
 - lychee で `learn/**/*.md` と Notebook内URLを検査。トリガ: PR＋`main` push＋月次cron。
 - 検出は自動・修正は手動（[development-guidelines.md](../../docs/development-guidelines.md) §4 の方針に準拠）。一時的な失敗を拾わないようリトライ/除外設定を持つ。
 
-### 3.4 第1章コンテンツ（座学）
-- index.md は「何のため・いつ使う・NF4とQLoRAの関係」を**平易な日本語**で薄く解説（陳腐化を避けるため詳細仕様は書かない）。
-- references.md は公式doc/論文/公式実装へ**絶対URL＋最終確認日（2026-06-13）**で集約（§5 マッピング参照）。
+### 3.4 第1章コンテンツ（座学）※実装済み
+- index.md は「何のため・いつ使う・NF4とQLoRAの関係」を**平易な日本語**で薄く解説（陳腐化を避けるため詳細仕様は書かない）。加えて grilling 反映として **NF4とQLoRAの混同防止記述**・**トラブルシュート小表**（§5.5）・**コラム「モデルを選ぶときの安全チェック」**（§5.4）を含む。
+- references.md は公式doc/論文/公式実装/モデルカードへ**絶対URL＋最終確認日（2026-06-20）**で集約（§5 マッピング参照。全URLを WebFetch で実在確認済み）。
 
 ### 3.5 ハンズオンNotebook（完走保証）
-- 既定モデルは**1〜3B級・ログイン不要な非ゲート（Apache-2.0/MIT）**（AC-3）。無料T4(15GB)でRun all完走を最優先。7Bは発展課題（Kaggle T4×2）として末尾で案内。
+- 既定モデルは **`HuggingFaceTB/SmolLM2-1.7B`（Apache-2.0/非ゲート/safetensors）**（§5.4 で確定）。無料T4(15GB)でRun all完走を最優先。OOM時は `TinyLlama-1.1B-Chat` にフォールバック。7B級・`Qwen2.5-1.5B` は発展として案内。
 - 依存は**バージョンpin**（transformers/bitsandbytes/peft/accelerate/datasets）。`seed` 固定で再現性確保。
 - 出力ノイズはコミット前に最小化（nbstripout は任意）。
 - 構成は §6 のテンプレートに従う。
@@ -90,7 +91,7 @@ Phase8 品質CI（lychee）＋ build --strict ＋ 受け入れ通し
 
 ## 5. 教材調達先マッピング（公式doc / 論文 / 公式実装 / 非ゲート小型モデル）
 
-第1章の座学（references.md）とNotebookの一次情報は以下に限定し、いずれも**最終確認日 2026-06-13**で記録する。出典の根拠は [research/03-learning-materials.md](../../research/03-learning-materials.md) ／ [research/99-sources.md](../../research/99-sources.md)。
+第1章の座学（references.md）とNotebookの一次情報は以下に限定し、いずれも**最終確認日 2026-06-20**で記録する（全URLを WebFetch で到達・内容一致を確認済み）。出典の根拠は [research/03-learning-materials.md](../../research/03-learning-materials.md) ／ [research/99-sources.md](../../research/99-sources.md)。
 
 ### 5.1 公式ドキュメント（一次情報・最優先）
 | リソース | URL | 用途 |
