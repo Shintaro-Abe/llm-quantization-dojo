@@ -47,3 +47,8 @@ markdown_extensions:
 
 nav:
   - ホーム: index.md
+  - はじめに:
+      - 環境構築（不要）: getting-started/environment-setup.md
+  - 第1章 bitsandbytes / QLoRA:
+      - 概念: chapters/01-bitsandbytes-qlora/index.md
+      - 公式リンク集: chapters/01-bitsandbytes-qlora/references.md
