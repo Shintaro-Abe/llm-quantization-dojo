@@ -1,0 +1,53 @@
+name: Link check
+
+# 方針（grilling=2C）：
+# - PR / main への push … 内部リンクのみ（--offline）で高速・安定にチェック（マージを止めるのはこちら）
+# - 月次 cron / 手動 … 外部リンクも含めてフルチェック（公式doc URL の改定検知。失敗は気づきの起点）
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "0 0 1 * *"  # 毎月1日 00:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  internal:
+    # PR / push では内部（ローカルファイル/相対）リンクのみ検査
+    if: github.event_name == 'pull_request' || github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Lychee (internal links only)
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --offline
+            --no-progress
+            "learn/**/*.md"
+            "docs/**/*.md"
+            "*.md"
+          fail: true
+
+  external:
+    # cron / 手動ではフル（外部URL含む）。失敗してもマージは止めない運用。
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Lychee (full, external included)
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --no-progress
+            --max-retries 3
+            --retry-wait-time 5
+            --max-concurrency 4
+            "learn/**/*.md"
+            "docs/**/*.md"
+            "*.md"
+          fail: true

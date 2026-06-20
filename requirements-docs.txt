@@ -1,0 +1,6 @@
+# MkDocs サイト（座学）のローカルビルド／CI 用依存。
+# バージョンは固定（pin）して再現性を担保する。
+# 更新時は `mkdocs build --strict` が通ることを確認すること。
+mkdocs==1.6.1
+mkdocs-material==9.7.6
+pymdown-extensions==10.21.3

@@ -3,6 +3,20 @@
 ## 概要
 開発を進めるうえで遵守すべき標準ルールを定義します。
 
+## ペルソナ
+本プロジェクト（LLM量子化 個人学習ツール）で必要な役割を、技術スタック・ロール・スキルから10のペルソナに統合した。重要度の高い順。
+
+1. **LLM量子化カリキュラム設計者** — 量子化手法の学習順序設計（NF4/QLoRA → GGUF → GPTQ → AWQ → 発展）
+2. **機械学習エンジニア（ハンズオン実装）** — Python / PyTorch / Hugging Face（transformers・peft・bitsandbytes・accelerate・datasets）
+3. **Notebook/Colab教材エンジニア** — Jupyter・Colab運用、VRAM見積り、無料GPUでの完走保証設計
+4. **テクニカルライター（日本語・初学者向け）** — 座学Markdown執筆、概念の平易化
+5. **MkDocsサイト構築エンジニア** — MkDocs Material、サイト設計、GitHub Pages公開
+6. **CI/CD・DevOpsエンジニア** — GitHub Actions、自動デプロイ、lycheeによるリンクチェック
+7. **学習体験/進捗管理設計者** — GitHub Issues/Projects、テンプレート、定着度設計
+8. **Gitリポジトリ管理者** — Git/GitHub運用、ブランチ・PR規約、リポジトリ構造維持
+9. **llama.cpp/GGUFスペシャリスト（発展）** — GGUF変換、CPU/ローカル推論
+10. **情報鮮度・品質QA** — 公式情報の追従、リンク切れ検知、ライセンス/著作権、Notebook完走検証
+
 ## プロジェクト構造
 
 ### ドキュメントの分類

@@ -2,6 +2,12 @@
 # settings.local.json は個人/ローカルの上書き設定。共有しない。
 .claude/settings.local.json
 
+# --- 外部スキル（個人ツール・共有しない） ---
+# npx skills で導入した個人用スキル。リポジトリ本体には含めない。
+.agents/
+.claude/skills/grill-me
+skills-lock.json
+
 # --- OS ---
 .DS_Store
 Thumbs.db
@@ -23,3 +29,6 @@ venv/
 
 # --- Node ---
 node_modules/
+
+# --- MkDocs（ビルド生成物） ---
+site/

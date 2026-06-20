@@ -1,0 +1,60 @@
+name: Deploy docs (GitHub Pages)
+
+# 座学サイト（MkDocs Material）をビルドして GitHub Pages へ公開する。
+# 公開ソースはリポジトリ設定で「GitHub Actions」を選択しておくこと（手順書参照）。
+# gh-pages ブランチは作らない（ビルドと履歴を分離）。
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "learn/**"
+      - "mkdocs.yml"
+      - "requirements-docs.txt"
+      - ".github/workflows/deploy-docs.yml"
+  workflow_dispatch:
+
+# Pages へのデプロイに必要な最小権限
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 同時実行を抑制（古い実行はキャンセルしない＝公開の取りこぼし防止）
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies (pinned)
+        run: pip install -r requirements-docs.txt
+
+      - name: Build site (strict)
+        run: mkdocs build --strict
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

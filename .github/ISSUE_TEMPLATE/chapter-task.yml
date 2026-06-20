@@ -1,0 +1,47 @@
+name: 章タスク（学習記録）
+description: 1章ぶんの学習をタスク化し、進捗・つまずき・所要時間を記録します
+title: "[第N章] "
+labels: ["learning"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        この Issue は「章＝概念→公式doc→Notebook→理解度確認」の **4点セットを1枚で記録**するためのものです。
+        作成後、Project に追加して進捗（Board）とスケジュール（Roadmap＝ガント）で可視化できます。手順は
+        [進捗管理の始め方](../../learn/getting-started/progress-tracking.md) を参照してください。
+  - type: input
+    id: chapter
+    attributes:
+      label: 章
+      description: どの章の学習か（自由記述）。例「第1章 bitsandbytes / QLoRA」
+      placeholder: 第1章 bitsandbytes / QLoRA
+    validations:
+      required: true
+  - type: checkboxes
+    id: steps
+    attributes:
+      label: 学習ステップ
+      description: 進めながらチェックしていきます
+      options:
+        - label: 座学（概念）を読んだ
+        - label: 公式リンク集で裏取りした
+        - label: ハンズオン Notebook を Run all で完走した
+        - label: 理解度確認に答えた
+  - type: textarea
+    id: stuck
+    attributes:
+      label: つまずいた点・メモ
+      description: エラー・疑問・解決方法など。後で振り返るための記録です。
+      placeholder: |
+        - OOM が出た → モデルを TinyLlama に変えたら完走した
+        - QLoRA と 4bitロードの違いが最初わからなかった
+    validations:
+      required: false
+  - type: input
+    id: minutes
+    attributes:
+      label: 所要時間（分）
+      description: 振り返り用。だいたいで構いません。
+      placeholder: "90"
+    validations:
+      required: false
