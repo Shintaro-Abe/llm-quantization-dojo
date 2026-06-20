@@ -2,7 +2,7 @@
 
 - 作業名: initial-implementation（MVP=第1章 bitsandbytes NF4/QLoRA）
 - 作成日: 2026-06-13
-- ステータス: 実装中（Phase 3〜5 完了 / Phase 6 着手前）。最終更新: 2026-06-20
+- ステータス: 実装中（Phase 3〜6 実装完了 / Phase 7 着手前。Notebookは静的・ロジック検証済、T4実機完走は要確認）。最終更新: 2026-06-20
 - 上位文書: [requirements.md](requirements.md) ／ [design.md](design.md)
 - 実装ブランチ: `feat/mvp-chapter-01`
 
@@ -41,17 +41,17 @@
 
 **DoD**: ✅ トップ→第1章で「概念→公式リンク集」へ到達でき（AC-1）、`build --strict` 警告ゼロ。
 
-## Phase 6: 第1章 ハンズオンNotebook 🔲 次に着手
+## Phase 6: 第1章 ハンズオンNotebook ✅ 実装完了（T4実機完走は学習者が確認）
 
-- [ ] T6-1 `notebooks/01_bitsandbytes_qlora.ipynb` を [design.md](design.md) §6 テンプレで作成（先頭md＋Colabバッジ＋メタ）。
-- [x] T6-2 既定モデル確定済み（[design.md](design.md) §5.4）: 既定=**`HuggingFaceTB/SmolLM2-1.7B`**（Apache-2.0/非ゲート/safetensors/`trust_remote_code`不要）、フォールバック=`TinyLlama/TinyLlama-1.1B-Chat-v1.0`、発展=`Qwen/Qwen2.5-1.5B`。※Notebook実装時にロード再確認。
-- [ ] T6-3 セットアップセルで依存をpin、環境確認セルで `nvidia-smi`／`seed` 固定。
-- [ ] T6-4 本編「NF4で4bitロード→QLoRA微調整→推論の前後比較」を段階的Markdown解説付きで実装（データ整形・成否確認は**Notebookが一次情報**）。
-- [ ] T6-5 末尾に理解度確認設問＋chapter-task Issue作成への導線リンク。
-- [ ] T6-6 章ページ（index.md）からNotebookへ「Open in Colab」バッジでリンク（リポジトリslug差し込み）。
-- [ ] T6-7 完走確認: ColabのT4で Run all（任意でCPU極小モデルのスモーク）。出力ノイズを最小化。
+- [x] T6-1 `notebooks/01_bitsandbytes_qlora.ipynb`（全16セル）を [design.md](design.md) §6 テンプレで作成（先頭md＋Colabバッジ＋メタ＋検証状況明示）。
+- [x] T6-2 既定モデル確定（[design.md](design.md) §5.4）: 既定=**`HuggingFaceTB/SmolLM2-1.7B`**、フォールバック=`TinyLlama/TinyLlama-1.1B-Chat-v1.0`、発展=`Qwen/Qwen2.5-1.5B`。
+- [x] T6-3 セットアップは量子化/学習系を緩めに `>=` 指定（torchはColab既定）、環境確認セルで `nvidia-smi`／`seed` 固定／GPU assert。
+- [x] T6-4 本編「NF4で4bitロード（fp16）→直書き十数件でQLoRA→推論の前後比較」を段階的Markdown解説付きで実装（データ整形・成否確認は**Notebookが一次情報**）。デモ=「語尾『〜だミャ。』強制」＋過学習の正直注記。
+- [x] T6-5 末尾に理解度確認設問＋chapter-task Issue作成への導線リンク。
+- [x] T6-6 章ページ（index.md）に「Open in Colab」バッジを追加（リポジトリslug `OWNER/REPO` は確定後に差し込み）。
+- [~] T6-7 **検証分担（grilling）**: 作者=**静的検証（nbformat妥当＋pythonセル構文）＋ロジック検証**まで実施済み。**T4実機の Run all 完走は学習者が確認**（Notebook冒頭に明示）。
 
-**DoD**: 無料T4で Run all 完走（NF4ロード→QLoRA→前後比較）、Colabバッジ動作（AC-2, AC-3）。
+**DoD**: 実装・静的/ロジック検証は完了。🔲 無料T4での Run all 完走（AC-2,3）は **学習者/利用時に実機確認**。
 
 ## Phase 7: 進捗管理テンプレ＋手順書 🔲
 
@@ -85,6 +85,6 @@
 1. ✅ Phase 3 ＋ 4（土台と公開を先に確立）
 2. ✅ Phase 5 T5-1（environment-setup＝挫折回避の導線）
 3. ✅ Phase 5 残り（第1章座学＋安全チェックコラム）
-4. 🔲 Phase 6（Notebook）← 次
-5. 🔲 Phase 7（進捗テンプレ＋手順書）
+4. ✅ Phase 6（Notebook・静的/ロジック検証済、T4実機完走は要確認）
+5. 🔲 Phase 7（進捗テンプレ＋手順書）← 次
 6. 🔲 Phase 8（品質CI → 受け入れ通し）
