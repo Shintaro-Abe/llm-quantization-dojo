@@ -22,8 +22,9 @@
 
 | 章 | テーマ | 状態 |
 | :-- | :-- | :-- |
-| 第1章 | bitsandbytes / NF4・QLoRA | 公開準備中 |
-| 第2章以降 | GGUF・GPTQ・AWQ・発展手法 | 今後追加 |
+| 第1章 | bitsandbytes / NF4・QLoRA | 公開中 |
+| 第2章 | GGUF / llama.cpp | 公開中 |
+| 第3章以降 | GPTQ・AWQ・発展手法 | 今後追加 |
 
 !!! note "環境構築は不要です"
     ハンズオンは Google Colab の無料GPU（T4）でそのまま実行できます。まずは「はじめに」で開き方を確認してください。

@@ -53,3 +53,6 @@ nav:
   - 第1章 bitsandbytes / QLoRA:
       - 概念: chapters/01-bitsandbytes-qlora/index.md
       - 公式リンク集: chapters/01-bitsandbytes-qlora/references.md
+  - 第2章 GGUF / llama.cpp:
+      - 概念: chapters/02-gguf-llama-cpp/index.md
+      - 公式リンク集: chapters/02-gguf-llama-cpp/references.md
