@@ -56,3 +56,6 @@ nav:
   - 第2章 GGUF / llama.cpp:
       - 概念: chapters/02-gguf-llama-cpp/index.md
       - 公式リンク集: chapters/02-gguf-llama-cpp/references.md
+  - 第3章 GPTQ:
+      - 概念: chapters/03-gptq/index.md
+      - 公式リンク集: chapters/03-gptq/references.md
