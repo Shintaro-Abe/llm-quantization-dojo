@@ -50,6 +50,7 @@ P5 品質検証  ── devコンテナで Notebook 実完走（AC-2保証）＋
 - **メリット**：requirements のフルパイプライン（変換→量子化→推論）を維持しつつ、ビルドの重さ・時間・ホスト負荷を排除。作者が devコンテナで安全に実完走検証できる（AC-2）。
 - **パスは固定値を書かず動的探索する（Codex A-1/A-2）**：`convert_hf_to_gguf.py` は版で配置が変わり（root↔`tools/`）、配布物の構成も変わりうる。よって `find` で実パス解決（`find_one(name, *roots)`：CONVERT は `llama.cpp`、QUANTIZE/COMPLETION は `prebuilt` を探索）。
 - **ローカル実行の注意**：Notebook は **Colab CPU（隔離環境）前提**。手元PCで直接 Run all すると変換でメモリを使うため非力機では重い旨を座学トラブルシュートに明記。
+- **ソースビルドの道は「発展」で復活（2026-06-21 追補）**：prebuilt 化は元々ローカル(WSL2)ビルド崩壊が動機の一部だったが、Colab は隔離環境でフルビルド可能。よって **prebuilt を主経路（AC-2作者保証を維持）としつつ、Notebook 末尾＋座学に「発展：ソースからビルドする」セクション**（cmake 手順）を追加し、当初 grilling の「フルビルド」意図を学習者向けに残す。発展セクションは Run all では実行されない（主経路の速さ・検証済み完走を保つため）。
 
 ### 3.2 固定コミット/タグ＝**`b9743`**（devコンテナで実証した known-good／grilling 決定1）
 - llama.cpp は更新が速く、`convert_hf_to_gguf.py` の版依存で SmolLM2 変換が転ぶ報告も存在（例: ggml-org/llama.cpp issue #13603）。
