@@ -21,6 +21,11 @@ paths = [
   '''(^|/)dist(/|$)''',
   '''(^|/)\.aws(/|$)''',
 ]
+regexes = [
+  # llama.cpp 公式スクリプト名 "convert_hf_to_gguf" の部分文字列が openai-oauth-refresh-token に誤検知される。
+  # 検出secretは "rt_hf_to_gguf" 固定（本物のrefresh tokenは rt_+長いランダム文字列）なので surgical に許可
+  '''^rt_hf_to_gguf$''',
+]
 
 # ---- カスタムルール ----
 
